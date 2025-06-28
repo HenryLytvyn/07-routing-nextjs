@@ -1,43 +1,45 @@
-import css from './TagsMenu.module.css';
+'use client';
+
 import Link from 'next/link';
+import css from './TagsMenu.module.css';
+import { useState } from 'react';
 
 export default function TagsMenu() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  function toggle() {
+    setIsOpen(!isOpen);
+  }
+
+  const tagsList = [
+    'All notes',
+    'Todo',
+    'Work',
+    'Personal',
+    'Meeting',
+    'Shopping',
+  ];
+
   return (
-    <div className="css.menuContainer">
-      {/* <Link href="/notes">Notes</Link> */}
-      <button className={css.menuButton}>Notes ▾</button>
-      <ul className={css.menuList}>
-        <li className={css.menuItem}>
-          <Link href={'/'} className={css.menuLink}>
-            All notes
-          </Link>
-        </li>
-        <li className={css.menuItem}>
-          <Link href={'/'} className={css.menuLink}>
-            Todo
-          </Link>
-        </li>
-        <li className={css.menuItem}>
-          <Link href={'/'} className={css.menuLink}>
-            Work
-          </Link>
-        </li>
-        <li className={css.menuItem}>
-          <Link href={'/'} className={css.menuLink}>
-            Personal
-          </Link>
-        </li>
-        <li className={css.menuItem}>
-          <Link href={'/'} className={css.menuLink}>
-            Meeting
-          </Link>
-        </li>
-        <li className={css.menuItem}>
-          <Link href={'/'} className={css.menuLink}>
-            Shopping
-          </Link>
-        </li>
-      </ul>
+    <div className={css.menuContainer}>
+      <button onClick={toggle} className={css.menuButton}>
+        Notes ▾
+      </button>
+      {isOpen && (
+        <ul className={css.menuList}>
+          {tagsList.map((tag, i) => (
+            <li key={i} className={css.menuItem}>
+              <Link
+                href={`/notes/filter/${tag}`}
+                className={css.menuLink}
+                onClick={toggle}
+              >
+                {tag}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

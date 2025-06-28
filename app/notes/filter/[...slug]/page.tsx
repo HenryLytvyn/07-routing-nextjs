@@ -1,8 +1,14 @@
 import { fetchNotes } from '@/lib/api';
 import NotesClient from './Notes.client';
 
-export default async function Notes() {
-  const response = await fetchNotes(1, 12, '');
+type Props = {
+  params: Promise<{ slug: string[] }>;
+};
 
-  return <NotesClient initialData={response} />;
+export default async function Notes({ params }: Props) {
+  const { slug } = await params;
+  const slugURL = slug?.join('/');
+  const response = await fetchNotes(1, '', slugURL);
+
+  return <NotesClient initialData={response} category={slugURL} />;
 }

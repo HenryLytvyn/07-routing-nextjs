@@ -13,19 +13,18 @@ import { ResponseGetData } from '@/types/ResponseGetData';
 
 type Props = {
   initialData: ResponseGetData;
+  category: string;
 };
 
-export default function NotesClient({ initialData }: Props) {
+export default function NotesClient({ initialData, category }: Props) {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [debouncedQuery] = useDebounce(search, 1000);
 
-  const perPage = 12;
-
   const allNotes = useQuery({
-    queryKey: ['allNotes', debouncedQuery, page],
-    queryFn: () => fetchNotes(page, perPage, debouncedQuery),
+    queryKey: ['allNotes', debouncedQuery, page, category],
+    queryFn: () => fetchNotes(page, debouncedQuery, category),
     placeholderData: keepPreviousData,
     refetchOnMount: false,
     initialData: page === 1 && search === '' ? initialData : undefined,

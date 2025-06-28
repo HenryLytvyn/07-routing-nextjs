@@ -12,17 +12,15 @@ const headers = {
 
 export async function fetchNotes(
   page: number,
-  perPage: number,
-  searchText: string
-  // tag?: string
+  searchText: string,
+  tag?: string
 ): Promise<ResponseGetData> {
   const { data } = await axios.get<ResponseGetData>('/notes', {
     params: {
       page,
       perPage: 12,
-      // tag: 'Todo',
       ...(searchText !== '' ? { search: searchText } : {}),
-      // ...{tag && {tag}}
+      ...(tag !== 'All%20notes' ? { tag } : {}),
     },
     headers,
   });
