@@ -14,12 +14,15 @@ export async function fetchNotes(
   page: number,
   perPage: number,
   searchText: string
+  // tag?: string
 ): Promise<ResponseGetData> {
   const { data } = await axios.get<ResponseGetData>('/notes', {
     params: {
       page,
-      perPage,
+      perPage: 12,
+      // tag: 'Todo',
       ...(searchText !== '' ? { search: searchText } : {}),
+      // ...{tag && {tag}}
     },
     headers,
   });
