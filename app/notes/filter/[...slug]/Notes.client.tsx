@@ -8,8 +8,9 @@ import css from './NotesPage.module.css';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import Pagination from '@/components/Pagination/Pagination';
 import NoteList from '@/components/NoteList/NoteList';
-import Modal from '@/components/Modal/Modal';
+// import Modal from '@/components/Modal/Modal';
 import { ResponseGetData } from '@/types/ResponseGetData';
+import { redirect } from 'next/navigation';
 
 type Props = {
   initialData: ResponseGetData;
@@ -19,7 +20,7 @@ type Props = {
 export default function NotesClient({ initialData, category }: Props) {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
   const [debouncedQuery] = useDebounce(search, 1000);
 
   const allNotes = useQuery({
@@ -50,7 +51,7 @@ export default function NotesClient({ initialData, category }: Props) {
         <button
           className={css.button}
           onClick={() => {
-            setIsModalOpen(true);
+            redirect('/');
           }}
         >
           Create note +
@@ -59,7 +60,7 @@ export default function NotesClient({ initialData, category }: Props) {
       {allNotes.isSuccess && allNotes.data.notes.length > 0 && (
         <NoteList items={allNotes.data.notes} />
       )}
-      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
+      {/* {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />} */}
     </div>
   );
 }
