@@ -9,7 +9,7 @@ import Modal from '@/components/Modal/Modal';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function NoteDetailsClient() {
+export default function NotePreviewClient() {
   const { id } = useParams<{ id: string }>();
 
   const router = useRouter();
