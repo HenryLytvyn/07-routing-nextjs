@@ -8,7 +8,7 @@ import css from './NotesPage.module.css';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import Pagination from '@/components/Pagination/Pagination';
 import NoteList from '@/components/NoteList/NoteList';
-import NoteModal from '@/components/NoteModal/NoteModal';
+import Modal from '@/components/Modal/Modal';
 import { ResponseGetData } from '@/types/ResponseGetData';
 
 type Props = {
@@ -59,7 +59,7 @@ export default function NotesClient({ initialData, category }: Props) {
       {allNotes.isSuccess && allNotes.data.notes.length > 0 && (
         <NoteList items={allNotes.data.notes} />
       )}
-      {isModalOpen && <NoteModal onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
     </div>
   );
 }

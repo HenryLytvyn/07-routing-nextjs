@@ -18,7 +18,7 @@ export async function fetchNotes(
   const { data } = await axios.get<ResponseGetData>('/notes', {
     params: {
       page,
-      perPage: 12,
+      perPage: 16,
       ...(searchText !== '' ? { search: searchText } : {}),
       ...(tag !== 'All%20notes' ? { tag } : {}),
     },

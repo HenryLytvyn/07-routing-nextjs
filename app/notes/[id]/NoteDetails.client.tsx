@@ -5,11 +5,11 @@ import css from './NoteDetails.module.css';
 import { useQuery } from '@tanstack/react-query';
 import { fetchNoteById } from '@/lib/api';
 import { format, parseISO } from 'date-fns';
-import NoteModal from '@/components/NoteModal/NoteModal';
-import { useState } from 'react';
+// import Modal from '@/components/Modal/Modal';
+// import { useState } from 'react';
 
 export default function NoteDetailsClient() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
   const { id } = useParams<{ id: string }>();
 
   const {
@@ -41,9 +41,9 @@ export default function NoteDetailsClient() {
         <div className={css.header}>
           <h2>{note?.title}</h2>
           <button
-            onClick={() => {
-              setIsModalOpen(true);
-            }}
+            // onClick={() => {
+            //   setIsModalOpen(true);
+            // }}
             className={css.editBtn}
           >
             Edit note
@@ -55,9 +55,7 @@ export default function NoteDetailsClient() {
           {formattedDate}
         </p>
       </div>
-      {isModalOpen && note && (
-        <NoteModal onClose={() => setIsModalOpen(false)} />
-      )}
+      {/* {isModalOpen && note && <Modal onClose={() => setIsModalOpen(false)} />} */}
     </div>
   );
 }
