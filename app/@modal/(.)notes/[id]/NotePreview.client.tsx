@@ -1,34 +1,34 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import css from './NotesPage.module.css';
 import { useQuery } from '@tanstack/react-query';
 import { fetchNoteById } from '@/lib/api';
 import { format, parseISO } from 'date-fns';
-import Modal from '@/components/Modal/Modal';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import css from '@/app/notes/[id]/NoteDetails.module.css';
+import Modal from '@/components/Modal/Modal';
 
 export default function NotePreviewClient() {
   const { id } = useParams<{ id: string }>();
 
   const router = useRouter();
 
-  useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown);
-    document.body.style.overflow = 'hidden';
+  // useEffect(() => {
+  //   document.addEventListener('keydown', handleKeyDown);
+  //   document.body.style.overflow = 'hidden';
 
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') {
-        router.push('/notes/filter/Todo');
-      }
-    }
+  //   function handleKeyDown(event: KeyboardEvent) {
+  //     if (event.key === 'Escape') {
+  //       router.back();
+  //     }
+  //   }
 
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = '';
-    };
-  });
+  //   return () => {
+  //     document.removeEventListener('keydown', handleKeyDown);
+  //     document.body.style.overflow = '';
+  //   };
+  // }, [router]);
 
   const {
     data: note,
@@ -54,14 +54,12 @@ export default function NotePreviewClient() {
   }
 
   return (
-    <Modal>
+    <Modal onClose={router.back}>
       <div className={css.container}>
         <div className={css.item}>
           <div className={css.header}>
             <h2>{note?.title}</h2>
-            <button onClick={() => router.back()} className={css.editBtn}>
-              Edit note
-            </button>
+            <button>Edit note</button>
           </div>
           <p className={css.content}>{note?.content}</p>
           <p className={css.date}>
@@ -69,6 +67,9 @@ export default function NotePreviewClient() {
             {formattedDate}
           </p>
         </div>
+        <button onClick={router.back} className={css.backBtn}>
+          Close
+        </button>
       </div>
     </Modal>
   );

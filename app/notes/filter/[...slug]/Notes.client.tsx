@@ -1,3 +1,5 @@
+// Notes.client.tsx
+
 'use client';
 
 import { fetchNotes } from '@/lib/api';
@@ -8,24 +10,25 @@ import css from './NotesPage.module.css';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import Pagination from '@/components/Pagination/Pagination';
 import NoteList from '@/components/NoteList/NoteList';
-// import Modal from '@/components/Modal/Modal';
 import { ResponseGetData } from '@/types/ResponseGetData';
-import { redirect } from 'next/navigation';
+import Modal from '@/components/Modal/Modal';
+import NoteForm from '@/components/NoteForm/NoteForm';
 
 type Props = {
   initialData: ResponseGetData;
-  category: string;
+  tag: string;
 };
 
-export default function NotesClient({ initialData, category }: Props) {
+export default function NotesClient({ initialData, tag }: Props) {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
-  // const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isNewEditOpen, setIsNewEditOpen] = useState(false);
+  // const [isPreviewOpen, setIsPreviewOpen] = useState(false)
   const [debouncedQuery] = useDebounce(search, 1000);
 
   const allNotes = useQuery({
-    queryKey: ['allNotes', debouncedQuery, page, category],
-    queryFn: () => fetchNotes(page, debouncedQuery, category),
+    queryKey: ['allNotes', debouncedQuery, page, tag],
+    queryFn: () => fetchNotes(page, debouncedQuery, tag),
     placeholderData: keepPreviousData,
     refetchOnMount: false,
     initialData: page === 1 && search === '' ? initialData : undefined,
@@ -51,7 +54,7 @@ export default function NotesClient({ initialData, category }: Props) {
         <button
           className={css.button}
           onClick={() => {
-            redirect('/');
+            setIsNewEditOpen(true);
           }}
         >
           Create note +
@@ -60,7 +63,11 @@ export default function NotesClient({ initialData, category }: Props) {
       {allNotes.isSuccess && allNotes.data.notes.length > 0 && (
         <NoteList items={allNotes.data.notes} />
       )}
-      {/* {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />} */}
+      {isNewEditOpen && (
+        <Modal onClose={() => setIsNewEditOpen(false)}>
+          <NoteForm onClose={() => setIsNewEditOpen(false)} />
+        </Modal>
+      )}
     </div>
   );
 }
