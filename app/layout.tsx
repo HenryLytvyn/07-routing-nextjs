@@ -22,7 +22,6 @@ export default function RootLayout({
             {children}
             {modal}
           </main>
-
           <Footer />
         </TanStackProvider>
       </body>

@@ -11,24 +11,7 @@ import Modal from '@/components/Modal/Modal';
 
 export default function NotePreviewClient() {
   const { id } = useParams<{ id: string }>();
-
   const router = useRouter();
-
-  // useEffect(() => {
-  //   document.addEventListener('keydown', handleKeyDown);
-  //   document.body.style.overflow = 'hidden';
-
-  //   function handleKeyDown(event: KeyboardEvent) {
-  //     if (event.key === 'Escape') {
-  //       router.back();
-  //     }
-  //   }
-
-  //   return () => {
-  //     document.removeEventListener('keydown', handleKeyDown);
-  //     document.body.style.overflow = '';
-  //   };
-  // }, [router]);
 
   const {
     data: note,
